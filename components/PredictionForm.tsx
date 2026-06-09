@@ -31,10 +31,14 @@ export function PredictionForm({ match }: PredictionFormProps) {
     [match.predictions, participantId],
   );
 
+  const canCancelVote =
+    match.canVote && !match.settled && existingPrediction !== null;
+
   const [prediction, setPrediction] = useState<PredictionChoice>(
     () => existingPrediction?.prediction ?? "home",
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -82,10 +86,64 @@ export function PredictionForm({ match }: PredictionFormProps) {
     }
   };
 
+  const handleCancel = async () => {
+    if (!participantId || !existingPrediction) {
+      return;
+    }
+
+    const confirmed = window.confirm(
+      "この試合の投票を取り消しますか？\n取り消すと未投票の状態に戻ります。",
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setIsCancelling(true);
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    try {
+      const response = await fetch("/api/predictions", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          participantId,
+          matchId: match.id,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error ?? "投票の取り消しに失敗しました");
+      }
+
+      setSuccessMessage("投票を取り消しました");
+      router.refresh();
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : "投票の取り消しに失敗しました",
+      );
+    } finally {
+      setIsCancelling(false);
+    }
+  };
+
   if (!match.canVote) {
     return (
       <p className="mt-4 rounded-xl bg-zinc-100 px-4 py-3 text-sm text-zinc-600">
-        投票締切のため、投票・変更はできません
+        投票締切のため、投票・変更・取り消しはできません
+      </p>
+    );
+  }
+
+  if (match.settled) {
+    return (
+      <p className="mt-4 rounded-xl bg-zinc-100 px-4 py-3 text-sm text-zinc-600">
+        精算済みのため、投票・変更・取り消しはできません
       </p>
     );
   }
@@ -153,7 +211,7 @@ export function PredictionForm({ match }: PredictionFormProps) {
 
       <button
         type="submit"
-        disabled={isSubmitting || !participantId}
+        disabled={isSubmitting || isCancelling || !participantId}
         className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-zinc-300"
       >
         {isSubmitting
@@ -162,6 +220,17 @@ export function PredictionForm({ match }: PredictionFormProps) {
             ? "予想を更新"
             : "投票する"}
       </button>
+
+      {canCancelVote ? (
+        <button
+          type="button"
+          onClick={handleCancel}
+          disabled={isSubmitting || isCancelling}
+          className="w-full rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {isCancelling ? "取り消し中..." : "投票を取り消す"}
+        </button>
+      ) : null}
     </form>
   );
 }

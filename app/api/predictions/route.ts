@@ -2,7 +2,7 @@ import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 import { toJapaneseDbError } from "@/lib/errors";
-import { getMatchById, getParticipantById } from "@/lib/queries";
+import { validatePredictionAccess } from "@/lib/prediction-access";
 import { supabase } from "@/lib/supabase";
 import type { PredictionChoice } from "@/lib/types";
 
@@ -42,26 +42,12 @@ export async function POST(request: Request) {
     );
   }
 
-  const participant = await getParticipantById(participantId);
+  const access = await validatePredictionAccess(participantId, matchId);
 
-  if (!participant) {
-    return NextResponse.json({ error: "参加者が見つかりません" }, { status: 404 });
-  }
-
-  if (participant.is_bot) {
-    return NextResponse.json({ error: "Botは投票できません" }, { status: 403 });
-  }
-
-  const match = await getMatchById(matchId);
-
-  if (!match) {
-    return NextResponse.json({ error: "試合が見つかりません" }, { status: 404 });
-  }
-
-  if (new Date(match.kickoff_at).getTime() <= Date.now()) {
+  if (!access.ok) {
     return NextResponse.json(
-      { error: "この試合は投票締切です。投票・変更はできません。" },
-      { status: 403 },
+      { error: access.error },
+      { status: access.status },
     );
   }
 
@@ -88,4 +74,61 @@ export async function POST(request: Request) {
   revalidatePath("/");
 
   return NextResponse.json({ prediction: data });
+}
+
+export async function DELETE(request: Request) {
+  let body: { participantId?: string; matchId?: string };
+
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json(
+      { error: "リクエスト形式が不正です" },
+      { status: 400 },
+    );
+  }
+
+  const { participantId, matchId } = body;
+
+  if (!participantId || !matchId) {
+    return NextResponse.json(
+      { error: "participantId, matchId は必須です" },
+      { status: 400 },
+    );
+  }
+
+  const access = await validatePredictionAccess(participantId, matchId);
+
+  if (!access.ok) {
+    return NextResponse.json(
+      { error: access.error },
+      { status: access.status },
+    );
+  }
+
+  const { data, error } = await supabase
+    .from("predictions")
+    .delete()
+    .eq("participant_id", participantId)
+    .eq("match_id", matchId)
+    .select("id")
+    .maybeSingle();
+
+  if (error) {
+    return NextResponse.json(
+      { error: toJapaneseDbError("投票の取り消し") },
+      { status: 500 },
+    );
+  }
+
+  if (!data) {
+    return NextResponse.json(
+      { error: "取り消す投票が見つかりません" },
+      { status: 404 },
+    );
+  }
+
+  revalidatePath("/");
+
+  return NextResponse.json({ message: "投票を取り消しました" });
 }

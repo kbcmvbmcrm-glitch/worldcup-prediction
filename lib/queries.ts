@@ -163,7 +163,7 @@ export async function getParticipantById(
 export async function getMatchById(matchId: string): Promise<Match | null> {
   const { data, error } = await supabase
     .from("matches")
-    .select("id, home_team, away_team, kickoff_at")
+    .select("id, home_team, away_team, kickoff_at, settled")
     .eq("id", matchId)
     .maybeSingle();
 

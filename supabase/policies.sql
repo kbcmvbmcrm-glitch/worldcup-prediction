@@ -20,6 +20,7 @@ GRANT DELETE ON TABLE public.matches TO anon;
 GRANT SELECT ON TABLE public.predictions TO anon;
 GRANT INSERT ON TABLE public.predictions TO anon;
 GRANT UPDATE ON TABLE public.predictions TO anon;
+GRANT DELETE ON TABLE public.predictions TO anon;
 
 GRANT SELECT ON TABLE public.chip_transactions TO anon;
 GRANT INSERT ON TABLE public.chip_transactions TO anon;
@@ -99,6 +100,11 @@ CREATE POLICY "anon_update_predictions"
 ON public.predictions FOR UPDATE TO anon
 USING (true)
 WITH CHECK (true);
+
+DROP POLICY IF EXISTS "anon_delete_predictions" ON public.predictions;
+CREATE POLICY "anon_delete_predictions"
+ON public.predictions FOR DELETE TO anon
+USING (true);
 
 -- ------------------------------------------------------------
 -- 6. chip_transactions ポリシー
