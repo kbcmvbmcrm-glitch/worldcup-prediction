@@ -1,0 +1,105 @@
+home_team,away_team,kickoff_at,stage,bet_amount,result,settled
+Mexico,South Africa,2026-06-11T15:00:00-04:00,group_a,500,,false
+South Korea,Czechia,2026-06-11T22:00:00-04:00,group_a,500,,false
+Canada,Bosnia and Herzegovina,2026-06-12T15:00:00-04:00,group_b,500,,false
+USA,Paraguay,2026-06-12T21:00:00-04:00,group_d,500,,false
+Haiti,Scotland,2026-06-13T21:00:00-04:00,group_c,500,,false
+Australia,Türkiye,2026-06-13T00:00:00-04:00,group_d,500,,false
+Brazil,Morocco,2026-06-13T18:00:00-04:00,group_c,500,,false
+Qatar,Switzerland,2026-06-13T15:00:00-04:00,group_b,500,,false
+Ivory Coast,Ecuador,2026-06-14T19:00:00-04:00,group_e,500,,false
+Germany,Curaçao,2026-06-14T13:00:00-04:00,group_e,500,,false
+Netherlands,Japan,2026-06-14T16:00:00-04:00,group_f,500,,false
+Sweden,Tunisia,2026-06-14T22:00:00-04:00,group_f,500,,false
+Saudi Arabia,Uruguay,2026-06-15T18:00:00-04:00,group_h,500,,false
+Spain,Cape Verde,2026-06-15T12:00:00-04:00,group_h,500,,false
+Iran,New Zealand,2026-06-15T21:00:00-04:00,group_g,500,,false
+Belgium,Egypt,2026-06-15T15:00:00-04:00,group_g,500,,false
+France,Senegal,2026-06-16T15:00:00-04:00,group_i,500,,false
+Iraq,Norway,2026-06-16T18:00:00-04:00,group_i,500,,false
+Argentina,Algeria,2026-06-16T21:00:00-04:00,group_j,500,,false
+Austria,Jordan,2026-06-16T00:00:00-04:00,group_j,500,,false
+Ghana,Panama,2026-06-17T19:00:00-04:00,group_l,500,,false
+England,Croatia,2026-06-17T16:00:00-04:00,group_l,500,,false
+Portugal,Congo DR,2026-06-17T13:00:00-04:00,group_k,500,,false
+Uzbekistan,Colombia,2026-06-17T22:00:00-04:00,group_k,500,,false
+Czechia,South Africa,2026-06-18T12:00:00-04:00,group_a,500,,false
+Switzerland,Bosnia and Herzegovina,2026-06-18T15:00:00-04:00,group_b,500,,false
+Canada,Qatar,2026-06-18T18:00:00-04:00,group_b,500,,false
+Mexico,South Korea,2026-06-18T21:00:00-04:00,group_a,500,,false
+Brazil,Haiti,2026-06-19T21:00:00-04:00,group_c,500,,false
+Scotland,Morocco,2026-06-19T18:00:00-04:00,group_c,500,,false
+Türkiye,Paraguay,2026-06-19T23:00:00-04:00,group_d,500,,false
+USA,Australia,2026-06-19T15:00:00-04:00,group_d,500,,false
+Germany,Ivory Coast,2026-06-20T16:00:00-04:00,group_e,500,,false
+Ecuador,Curaçao,2026-06-20T20:00:00-04:00,group_e,500,,false
+Netherlands,Sweden,2026-06-20T13:00:00-04:00,group_f,500,,false
+Tunisia,Japan,2026-06-20T00:00:00-04:00,group_f,500,,false
+Uruguay,Cape Verde,2026-06-21T18:00:00-04:00,group_h,500,,false
+Spain,Saudi Arabia,2026-06-21T12:00:00-04:00,group_h,500,,false
+Belgium,Iran,2026-06-21T15:00:00-04:00,group_g,500,,false
+New Zealand,Egypt,2026-06-21T21:00:00-04:00,group_g,500,,false
+Norway,Senegal,2026-06-22T20:00:00-04:00,group_i,500,,false
+France,Iraq,2026-06-22T17:00:00-04:00,group_i,500,,false
+Argentina,Austria,2026-06-22T13:00:00-04:00,group_j,500,,false
+Jordan,Algeria,2026-06-22T23:00:00-04:00,group_j,500,,false
+England,Ghana,2026-06-23T16:00:00-04:00,group_l,500,,false
+Panama,Croatia,2026-06-23T19:00:00-04:00,group_l,500,,false
+Portugal,Uzbekistan,2026-06-23T13:00:00-04:00,group_k,500,,false
+Colombia,Congo DR,2026-06-23T22:00:00-04:00,group_k,500,,false
+Scotland,Brazil,2026-06-24T18:00:00-04:00,group_c,500,,false
+Morocco,Haiti,2026-06-24T18:00:00-04:00,group_c,500,,false
+Switzerland,Canada,2026-06-24T15:00:00-04:00,group_b,500,,false
+Bosnia and Herzegovina,Qatar,2026-06-24T15:00:00-04:00,group_b,500,,false
+Czechia,Mexico,2026-06-24T21:00:00-04:00,group_a,500,,false
+South Africa,South Korea,2026-06-24T21:00:00-04:00,group_a,500,,false
+Curaçao,Ivory Coast,2026-06-25T16:00:00-04:00,group_e,500,,false
+Ecuador,Germany,2026-06-25T16:00:00-04:00,group_e,500,,false
+Japan,Sweden,2026-06-25T19:00:00-04:00,group_f,500,,false
+Tunisia,Netherlands,2026-06-25T19:00:00-04:00,group_f,500,,false
+Türkiye,USA,2026-06-25T22:00:00-04:00,group_d,500,,false
+Paraguay,Australia,2026-06-25T22:00:00-04:00,group_d,500,,false
+Norway,France,2026-06-26T15:00:00-04:00,group_i,500,,false
+Senegal,Iraq,2026-06-26T15:00:00-04:00,group_i,500,,false
+Egypt,Iran,2026-06-26T23:00:00-04:00,group_g,500,,false
+New Zealand,Belgium,2026-06-26T23:00:00-04:00,group_g,500,,false
+Cape Verde,Saudi Arabia,2026-06-26T20:00:00-04:00,group_h,500,,false
+Uruguay,Spain,2026-06-26T20:00:00-04:00,group_h,500,,false
+Panama,England,2026-06-27T17:00:00-04:00,group_l,500,,false
+Croatia,Ghana,2026-06-27T17:00:00-04:00,group_l,500,,false
+Algeria,Austria,2026-06-27T22:00:00-04:00,group_j,500,,false
+Jordan,Argentina,2026-06-27T22:00:00-04:00,group_j,500,,false
+Colombia,Portugal,2026-06-27T19:30:00-04:00,group_k,500,,false
+Congo DR,Uzbekistan,2026-06-27T19:30:00-04:00,group_k,500,,false
+Group A Runners Up,Group B Runners Up,2026-06-28T15:00:00-04:00,round_of_32,150,,false
+Group E Winners,Group A/B/C/D/F 3rd Place,2026-06-29T16:30:00-04:00,round_of_32,150,,false
+Group F Winners,Group C Runners Up,2026-06-29T21:00:00-04:00,round_of_32,150,,false
+Group C Winners,Group F Runners Up,2026-06-29T13:00:00-04:00,round_of_32,150,,false
+Group I Winners,Group C/D/F/G/H 3rd Place,2026-06-30T17:00:00-04:00,round_of_32,150,,false
+Group E Runners Up,Group I Runners Up,2026-06-30T13:00:00-04:00,round_of_32,150,,false
+Group A Winners,Group C/E/F/H/I 3rd Place,2026-06-30T21:00:00-04:00,round_of_32,150,,false
+Group L Winners,Group E/H/I/J/K 3rd Place,2026-07-01T12:00:00-04:00,round_of_32,150,,false
+Group D Winners,Group B/E/F/I/J 3rd Place,2026-07-01T20:00:00-04:00,round_of_32,150,,false
+Group G Winners,Group A/E/H/I/J 3rd Place,2026-07-01T16:00:00-04:00,round_of_32,150,,false
+Group K Runners Up,Group L Runners Up,2026-07-02T19:00:00-04:00,round_of_32,150,,false
+Group H Winners,Group J Runners Up,2026-07-02T15:00:00-04:00,round_of_32,150,,false
+Group B Winners,Group E/F/G/I/J 3rd Place,2026-07-02T23:00:00-04:00,round_of_32,150,,false
+Group J Winners,Group H Runners Up,2026-07-03T18:00:00-04:00,round_of_32,150,,false
+Group K Winners,Group D/E/I/J/L 3rd Place,2026-07-03T21:30:00-04:00,round_of_32,150,,false
+Group D Runners Up,Group G Runners Up,2026-07-03T14:00:00-04:00,round_of_32,150,,false
+Match 74 Winner,Match 77 Winner,2026-07-04T17:00:00-04:00,round_of_16,200,,false
+Match 73 Winner,Match 75 Winner,2026-07-04T13:00:00-04:00,round_of_16,200,,false
+Match 76 Winner,Match 78 Winner,2026-07-05T16:00:00-04:00,round_of_16,200,,false
+Match 79 Winner,Match 80 Winner,2026-07-05T20:00:00-04:00,round_of_16,200,,false
+Match 83 Winner,Match 84 Winner,2026-07-06T15:00:00-04:00,round_of_16,200,,false
+Match 81 Winner,Match 82 Winner,2026-07-06T20:00:00-04:00,round_of_16,200,,false
+Match 86 Winner,Match 88 Winner,2026-07-07T12:00:00-04:00,round_of_16,200,,false
+Match 85 Winner,Match 87 Winner,2026-07-07T16:00:00-04:00,round_of_16,200,,false
+Match 89 Winner,Match 90 Winner,2026-07-09T16:00:00-04:00,quarter_final,300,,false
+Match 93 Winner,Match 94 Winner,2026-07-10T15:00:00-04:00,quarter_final,300,,false
+Match 91 Winner,Match 92 Winner,2026-07-11T17:00:00-04:00,quarter_final,300,,false
+Match 95 Winner,Match 96 Winner,2026-07-11T21:00:00-04:00,quarter_final,300,,false
+Match 97 Winner,Match 98 Winner,2026-07-14T15:00:00-04:00,semi_final,500,,false
+Match 99 Winner,Match 100 Winner,2026-07-15T15:00:00-04:00,semi_final,500,,false
+Match 101 Loser,Match 102 Loser,2026-07-18T17:00:00-04:00,third_place,300,,false
+Match 101 Winner,Match 102 Winner,2026-07-19T15:00:00-04:00,final,1000,,false
