@@ -5,9 +5,14 @@ import { useMemo, useState } from "react";
 
 import { AlertMessage } from "@/components/AlertMessage";
 import { MatchBetAmountEditor } from "@/components/MatchBetAmountEditor";
+import { MatchSettledFilterBar } from "@/components/MatchSettledFilterBar";
 import { SettledResultDisplay } from "@/components/SettledResultDisplay";
 import { formatBetAmount } from "@/lib/bet-amount";
 import { formatKickoffAt } from "@/lib/format";
+import {
+  filterMatchesBySettled,
+  type MatchSettledFilter,
+} from "@/lib/match-filter";
 import { formatPredictionLabel, getPredictionOptions } from "@/lib/prediction-labels";
 import { formatMatchup } from "@/lib/team-names";
 import type { MatchAdmin, PredictionChoice } from "@/lib/types";
@@ -33,6 +38,8 @@ export function MatchResultForm({ initialMatches }: MatchResultFormProps) {
   const [unsettlingId, setUnsettlingId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [settledFilter, setSettledFilter] =
+    useState<MatchSettledFilter>("all");
 
   const unsettledMatches = useMemo(
     () => matches.filter((match) => !match.settled),
@@ -41,6 +48,18 @@ export function MatchResultForm({ initialMatches }: MatchResultFormProps) {
   const settledMatches = useMemo(
     () => matches.filter((match) => match.settled),
     [matches],
+  );
+  const filteredUnsettledMatches = useMemo(
+    () => filterMatchesBySettled(unsettledMatches, settledFilter),
+    [unsettledMatches, settledFilter],
+  );
+  const filteredSettledMatches = useMemo(
+    () => filterMatchesBySettled(settledMatches, settledFilter),
+    [settledMatches, settledFilter],
+  );
+  const filteredAllMatches = useMemo(
+    () => filterMatchesBySettled(matches, settledFilter),
+    [matches, settledFilter],
   );
 
   const handleUnsettle = async (match: MatchAdmin) => {
@@ -277,29 +296,22 @@ export function MatchResultForm({ initialMatches }: MatchResultFormProps) {
     );
   };
 
-  return (
-    <div className="space-y-6">
-      {errorMessage ? <AlertMessage type="error" message={errorMessage} /> : null}
-      {successMessage ? (
-        <AlertMessage type="success" message={successMessage} />
-      ) : null}
-
-      {matches.length === 0 ? (
-        <p className="text-sm text-zinc-500">試合がありません</p>
-      ) : (
+  const renderFilteredContent = () => {
+    if (settledFilter === "all") {
+      return (
         <>
-          {unsettledMatches.length > 0 ? (
+          {filteredUnsettledMatches.length > 0 ? (
             <section className="space-y-4">
               <div className="flex items-center justify-between gap-3">
                 <h2 className="text-base font-semibold text-zinc-900">
                   未精算の試合
                 </h2>
                 <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800">
-                  {unsettledMatches.length}件
+                  {filteredUnsettledMatches.length}件
                 </span>
               </div>
               <div className="space-y-4">
-                {unsettledMatches.map(renderMatchCard)}
+                {filteredUnsettledMatches.map(renderMatchCard)}
               </div>
             </section>
           ) : (
@@ -308,22 +320,54 @@ export function MatchResultForm({ initialMatches }: MatchResultFormProps) {
             </p>
           )}
 
-          {settledMatches.length > 0 ? (
+          {filteredSettledMatches.length > 0 ? (
             <section className="space-y-4">
               <div className="flex items-center justify-between gap-3">
                 <h2 className="text-base font-semibold text-zinc-700">
                   精算済みの試合
                 </h2>
                 <span className="rounded-full bg-zinc-200 px-3 py-1 text-xs font-medium text-zinc-700">
-                  {settledMatches.length}件
+                  {filteredSettledMatches.length}件
                 </span>
               </div>
               <div className="space-y-4">
-                {settledMatches.map(renderMatchCard)}
+                {filteredSettledMatches.map(renderMatchCard)}
               </div>
             </section>
           ) : null}
         </>
+      );
+    }
+
+    if (filteredAllMatches.length === 0) {
+      return (
+        <p className="text-sm text-zinc-500">該当する試合はありません</p>
+      );
+    }
+
+    return (
+      <div className="space-y-4">
+        {filteredAllMatches.map(renderMatchCard)}
+      </div>
+    );
+  };
+
+  return (
+    <div className="space-y-6">
+      {errorMessage ? <AlertMessage type="error" message={errorMessage} /> : null}
+      {successMessage ? (
+        <AlertMessage type="success" message={successMessage} />
+      ) : null}
+
+      <MatchSettledFilterBar
+        value={settledFilter}
+        onChange={setSettledFilter}
+      />
+
+      {matches.length === 0 ? (
+        <p className="text-sm text-zinc-500">試合がありません</p>
+      ) : (
+        renderFilteredContent()
       )}
     </div>
   );

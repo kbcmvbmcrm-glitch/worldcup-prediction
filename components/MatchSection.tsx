@@ -1,8 +1,17 @@
+"use client";
+
+import { useMemo, useState } from "react";
+
+import { MatchSettledFilterBar } from "@/components/MatchSettledFilterBar";
 import { PredictionFormContainer } from "@/components/PredictionFormContainer";
 import { SettledResultDisplay } from "@/components/SettledResultDisplay";
 import { VoteStatusSection } from "@/components/VoteStatusSection";
 import { formatBetAmount } from "@/lib/bet-amount";
 import { formatKickoffAt } from "@/lib/format";
+import {
+  filterMatchesBySettled,
+  type MatchSettledFilter,
+} from "@/lib/match-filter";
 import { formatMatchup } from "@/lib/team-names";
 import type { MatchWithPrediction, Participant } from "@/lib/types";
 
@@ -15,6 +24,13 @@ export function MatchSection({
   matches,
   regularParticipants,
 }: MatchSectionProps) {
+  const [settledFilter, setSettledFilter] = useState<MatchSettledFilter>("all");
+
+  const filteredMatches = useMemo(
+    () => filterMatchesBySettled(matches, settledFilter),
+    [matches, settledFilter],
+  );
+
   return (
     <section className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-6">
       <h2 className="text-lg font-semibold text-zinc-900">試合一覧</h2>
@@ -22,11 +38,20 @@ export function MatchSection({
         未開始の試合に投票できます。投票状況は全試合で確認できます。
       </p>
 
+      <div className="mt-4">
+        <MatchSettledFilterBar
+          value={settledFilter}
+          onChange={setSettledFilter}
+        />
+      </div>
+
       {matches.length === 0 ? (
         <p className="mt-4 text-sm text-zinc-500">試合がありません</p>
+      ) : filteredMatches.length === 0 ? (
+        <p className="mt-4 text-sm text-zinc-500">該当する試合はありません</p>
       ) : (
         <div className="mt-4 space-y-4">
-          {matches.map((match) => (
+          {filteredMatches.map((match) => (
             <article
               key={match.id}
               className="rounded-2xl border border-zinc-200 p-4 sm:p-5"
@@ -76,7 +101,9 @@ export function MatchSection({
                 regularParticipants={regularParticipants}
               />
 
-              {match.canVote ? <PredictionFormContainer match={match} /> : null}
+              {match.canVote ? (
+                <PredictionFormContainer match={match} />
+              ) : null}
             </article>
           ))}
         </div>

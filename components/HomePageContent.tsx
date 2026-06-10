@@ -2,9 +2,8 @@
 
 import { AdminLinks } from "@/components/AdminLinks";
 import { CurrentParticipantBar } from "@/components/CurrentParticipantBar";
-import { MatchSection } from "@/components/MatchSection";
+import { HomeTabs } from "@/components/HomeTabs";
 import { ParticipantSessionProvider } from "@/components/ParticipantSessionProvider";
-import { RankingSection } from "@/components/RankingSection";
 import type { MatchWithPrediction, Participant, RankingEntry } from "@/lib/types";
 
 type HomePageContentProps = {
@@ -23,8 +22,8 @@ export function HomePageContent({
       <div className="flex flex-col gap-6">
         <CurrentParticipantBar />
         <AdminLinks />
-        <RankingSection ranking={ranking} />
-        <MatchSection
+        <HomeTabs
+          ranking={ranking}
           matches={matches}
           regularParticipants={regularParticipants}
         />
