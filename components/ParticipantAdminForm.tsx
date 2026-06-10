@@ -4,7 +4,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { AlertMessage } from "@/components/AlertMessage";
-import { isProtectedParticipant } from "@/lib/participants";
+import {
+  getParticipantRoleLabel,
+  isProtectedParticipant,
+} from "@/lib/participants";
 import type { Participant } from "@/lib/types";
 
 type ParticipantAdminFormProps = {
@@ -236,8 +239,8 @@ export function ParticipantAdminForm({
                         </p>
                       )}
                       <p className="mt-1 text-xs text-zinc-500">
-                        {participant.is_bot ? "Bot" : "参加者"}
-                        {isProtected ? " / 削除不可" : ""}
+                        {getParticipantRoleLabel(participant)}
+                        {isProtected ? " / 削除不可・名前変更不可" : ""}
                       </p>
                     </div>
 

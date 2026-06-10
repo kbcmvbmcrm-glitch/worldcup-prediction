@@ -1,3 +1,4 @@
+import { isPrizeBot } from "@/lib/participants";
 import { supabase } from "@/lib/supabase";
 import type {
   ChipTransaction,
@@ -51,7 +52,9 @@ export async function getRanking(): Promise<RankingEntry[]> {
   }
 
   const ranked = participants
-    .filter((participant) => !participant.is_bot)
+    .filter(
+      (participant) => !participant.is_bot || isPrizeBot(participant),
+    )
     .map((participant) => ({
       participantId: participant.id,
       name: participant.name,
