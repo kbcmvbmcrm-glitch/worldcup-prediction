@@ -4,18 +4,25 @@ import { AdminLinks } from "@/components/AdminLinks";
 import { CurrentParticipantBar } from "@/components/CurrentParticipantBar";
 import { HomeTabs } from "@/components/HomeTabs";
 import { ParticipantSessionProvider } from "@/components/ParticipantSessionProvider";
-import type { MatchWithPrediction, Participant, RankingEntry } from "@/lib/types";
+import type {
+  MatchWithPrediction,
+  Participant,
+  RankingEntry,
+  SettlementHistoryEntry,
+} from "@/lib/types";
 
 type HomePageContentProps = {
   ranking: RankingEntry[];
   matches: MatchWithPrediction[];
   regularParticipants: Participant[];
+  settlementHistory: SettlementHistoryEntry[];
 };
 
 export function HomePageContent({
   ranking,
   matches,
   regularParticipants,
+  settlementHistory,
 }: HomePageContentProps) {
   return (
     <ParticipantSessionProvider participants={regularParticipants}>
@@ -26,6 +33,7 @@ export function HomePageContent({
           ranking={ranking}
           matches={matches}
           regularParticipants={regularParticipants}
+          settlementHistory={settlementHistory}
         />
       </div>
     </ParticipantSessionProvider>

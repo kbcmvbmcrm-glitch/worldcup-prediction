@@ -23,3 +23,27 @@ export function filterMatchesBySettled<T extends { settled?: boolean }>(
 
   return matches;
 }
+
+export function applyMatchSettledFilter<T extends { settled?: boolean }>(
+  matches: T[],
+  filter: MatchSettledFilter,
+): T[] {
+  const filtered = filterMatchesBySettled(matches, filter);
+
+  if (filter !== "all") {
+    return filtered;
+  }
+
+  const unsettled: T[] = [];
+  const settled: T[] = [];
+
+  for (const match of filtered) {
+    if (match.settled) {
+      settled.push(match);
+    } else {
+      unsettled.push(match);
+    }
+  }
+
+  return [...unsettled, ...settled];
+}

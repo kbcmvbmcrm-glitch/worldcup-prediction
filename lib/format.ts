@@ -26,3 +26,18 @@ export function formatSignedAmount(amount: number): string {
 export function formatChips(chips: number): string {
   return formatSignedAmount(chips);
 }
+
+export function formatSettlementDateTime(value: string | null | undefined): string {
+  if (!value) {
+    return "—";
+  }
+
+  return new Intl.DateTimeFormat("ja-JP", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
+}

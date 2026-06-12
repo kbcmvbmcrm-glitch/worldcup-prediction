@@ -3,17 +3,20 @@ import {
   getMatchesWithPredictions,
   getParticipants,
   getRanking,
+  getSettlementHistoryEntries,
 } from "@/lib/queries";
 import { getRegularParticipants } from "@/lib/vote-status";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [ranking, matches, participants] = await Promise.all([
-    getRanking(),
-    getMatchesWithPredictions(),
-    getParticipants(),
-  ]);
+  const [ranking, matches, participants, settlementHistory] =
+    await Promise.all([
+      getRanking(),
+      getMatchesWithPredictions(),
+      getParticipants(),
+      getSettlementHistoryEntries(),
+    ]);
   const regularParticipants = getRegularParticipants(participants);
 
   return (
@@ -32,6 +35,7 @@ export default async function Home() {
           ranking={ranking}
           matches={matches}
           regularParticipants={regularParticipants}
+          settlementHistory={settlementHistory}
         />
       </main>
     </div>

@@ -5,11 +5,12 @@ import { useMemo, useState } from "react";
 import { MatchSettledFilterBar } from "@/components/MatchSettledFilterBar";
 import { PredictionFormContainer } from "@/components/PredictionFormContainer";
 import { SettledResultDisplay } from "@/components/SettledResultDisplay";
+import { TomorrowUnvotedBanner } from "@/components/TomorrowUnvotedBanner";
 import { VoteStatusSection } from "@/components/VoteStatusSection";
 import { formatBetAmount } from "@/lib/bet-amount";
 import { formatKickoffAt } from "@/lib/format";
 import {
-  filterMatchesBySettled,
+  applyMatchSettledFilter,
   type MatchSettledFilter,
 } from "@/lib/match-filter";
 import { formatMatchup } from "@/lib/team-names";
@@ -27,7 +28,7 @@ export function MatchSection({
   const [settledFilter, setSettledFilter] = useState<MatchSettledFilter>("all");
 
   const filteredMatches = useMemo(
-    () => filterMatchesBySettled(matches, settledFilter),
+    () => applyMatchSettledFilter(matches, settledFilter),
     [matches, settledFilter],
   );
 
@@ -37,6 +38,10 @@ export function MatchSection({
       <p className="mt-1 text-sm text-zinc-500">
         未開始の試合に投票できます。投票状況は全試合で確認できます。
       </p>
+
+      <div className="mt-4">
+        <TomorrowUnvotedBanner matches={matches} />
+      </div>
 
       <div className="mt-4">
         <MatchSettledFilterBar

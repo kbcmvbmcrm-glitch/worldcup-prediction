@@ -54,6 +54,23 @@ export type ChipTransaction = {
   id: string;
   participant_id: string;
   amount: number;
+  reason?: string;
+  match_id?: string | null;
+  created_at?: string | null;
+};
+
+export type SettlementHistoryEntry = {
+  id: string;
+  participantId: string;
+  participantName: string;
+  matchId: string | null;
+  matchup: string | null;
+  homeTeam: string | null;
+  awayTeam: string | null;
+  result: PredictionChoice | null;
+  amount: number;
+  reason: string;
+  settledAt: string | null;
 };
 
 export type RankingEntry = {

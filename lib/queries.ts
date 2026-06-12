@@ -1,5 +1,6 @@
 import { isPrizeBot } from "@/lib/participants";
 import { supabase } from "@/lib/supabase";
+import { formatMatchup } from "@/lib/team-names";
 import type {
   ChipTransaction,
   Match,
@@ -7,7 +8,9 @@ import type {
   MatchWithPrediction,
   Participant,
   Prediction,
+  PredictionChoice,
   RankingEntry,
+  SettlementHistoryEntry,
 } from "@/lib/types";
 
 export async function getParticipants(): Promise<Participant[]> {
@@ -26,13 +29,68 @@ export async function getParticipants(): Promise<Participant[]> {
 export async function getChipTransactions(): Promise<ChipTransaction[]> {
   const { data, error } = await supabase
     .from("chip_transactions")
-    .select("id, participant_id, amount");
+    .select("id, participant_id, amount, reason, match_id, created_at");
 
   if (error) {
     throw new Error("取引履歴の取得に失敗しました");
   }
 
   return data ?? [];
+}
+
+export async function getSettlementHistoryEntries(): Promise<
+  SettlementHistoryEntry[]
+> {
+  const [transactions, participants, matches] = await Promise.all([
+    getChipTransactions(),
+    getParticipants(),
+    getAllMatches(),
+  ]);
+
+  const participantNameById = new Map(
+    participants.map((participant) => [participant.id, participant.name]),
+  );
+  const matchById = new Map(matches.map((match) => [match.id, match]));
+
+  const entries: SettlementHistoryEntry[] = transactions.map((transaction) => {
+    const match = transaction.match_id
+      ? (matchById.get(transaction.match_id) ?? null)
+      : null;
+
+    return {
+      id: transaction.id,
+      participantId: transaction.participant_id,
+      participantName:
+        participantNameById.get(transaction.participant_id) ?? "不明な参加者",
+      matchId: transaction.match_id ?? null,
+      matchup: match
+        ? formatMatchup(match.home_team, match.away_team)
+        : null,
+      homeTeam: match?.home_team ?? null,
+      awayTeam: match?.away_team ?? null,
+      result: (match?.result as PredictionChoice | null | undefined) ?? null,
+      amount: transaction.amount,
+      reason: transaction.reason ?? "",
+      settledAt: transaction.created_at ?? null,
+    };
+  });
+
+  entries.sort((left, right) => {
+    const leftTime = left.settledAt
+      ? new Date(left.settledAt).getTime()
+      : Number.NEGATIVE_INFINITY;
+    const rightTime = right.settledAt
+      ? new Date(right.settledAt).getTime()
+      : Number.NEGATIVE_INFINITY;
+
+    if (leftTime !== rightTime) {
+      return rightTime - leftTime;
+    }
+
+    return right.id.localeCompare(left.id);
+  });
+
+  return entries;
 }
 
 export async function getRanking(): Promise<RankingEntry[]> {
